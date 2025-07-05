@@ -49,7 +49,10 @@ jobs:
               chmod +x setup.sh && \
               apk update && \
               apk add --no-cache \
-              rsync openssh shadow
+              rsync \
+              openssh \
+              shadow \
+              libstdc++
 
           CMD [ "/setup.sh"]
 
