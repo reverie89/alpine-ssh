@@ -24,6 +24,7 @@ jobs:
           # Retry up to 10 times to get LATEST_VERSION
           for i in $(seq 1 10); do
             LATEST_VERSION=$(curl -s https://api.github.com/repos/linuxserver/docker-baseimage-alpine/releases/latest | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+            echo "Latest version: ${LATEST_VERSION}"
             if [ -n "$LATEST_VERSION" ]; then
               break
             fi
@@ -34,9 +35,7 @@ jobs:
             echo "Failed to fetch LATEST_VERSION after 3 attempts." >&2
             exit 1
           fi
-
           echo "LATEST_VERSION=${LATEST_VERSION}" >> $GITHUB_ENV
-          echo "Latest version: ${LATEST_VERSION}"
 
           LATEST_VERSION_DOCKERTAG=$(echo ${LATEST_VERSION} | cut -d'-' -f1)
           echo "LATEST_VERSION_DOCKERTAG=${LATEST_VERSION_DOCKERTAG}" >> $GITHUB_ENV
